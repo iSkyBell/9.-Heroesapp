@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Heroe } from '../../interfaces/heroe.interface';
+import { HeroesService } from '../../services/heroes.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -16,10 +18,16 @@ export class HeroeComponent {
     casa: 'Marvel'
   };
 
-  constructor() { }
+  constructor( public _heroes:HeroesService, private router:Router ) { }
 
   guardar(){
-    console.log(this.heroe);
+    this._heroes.nuevoHeroe( this.heroe )
+                .subscribe( data => {
+                  let name = data['name'];
+                  this.router.navigate(['/heroe', name])
+                },
+                  error=>console.error(error)
+                );
   }
 
 }
