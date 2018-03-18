@@ -7,7 +7,8 @@ import 'rxjs/Rx';
 @Injectable()
 export class HeroesService {
 
-  heroesURL:string = "https://heroesapp-1a876.firebaseio.com/heroes.json";
+  heroesURL:string = 'https://heroesapp-1a876.firebaseio.com/heroes.json';
+  heroeURL:string  = 'https://heroesapp-1a876.firebaseio.com/heroes/';
 
   constructor( public httpClient: HttpClient ) { }
 
@@ -18,25 +19,27 @@ export class HeroesService {
     });
 
     return this.httpClient.post( this.heroesURL, body, {headers: headers} )
-                          .map(resp=>{
-                            console.log( 'Service' );
-                            console.log( resp );
-                            return resp;
-                          });
-  }
+                          .map(resp=>resp);
+  }// fin guardarHeroe
 
-  actualizarHeroe( heroe:Heroe ){
+  actualizarHeroe( heroe:Heroe, key$:string ){
+    
     let body:string          = JSON.stringify(heroe);
+    
     let headers:HttpHeaders  = new HttpHeaders({
       'Content-Type':'application/json'
     });
-    let url:string = '';
-    return this.httpClient.put( this.heroesURL, body, {headers: headers} )
-                          .map(resp=>{
-                            console.log( 'Service' );
-                            console.log( resp );
-                            return resp;
-                          });
-  }
+    
+    let url = `${ this.heroeURL }/${ key$ }.json`;
+
+    return this.httpClient.put( url, body, {headers: headers} )
+                          .map(resp=>resp);
+  }// fin actualizarHeroe
+
+  obtenerHeroe( key$:string ){
+    let url = `${ this.heroeURL }/${ key$ }.json`;
+    return this.httpClient.get( url )
+                          .map(resp=>resp);
+  }// fin obtenerHeroe
 
 }
