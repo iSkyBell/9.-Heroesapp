@@ -18,15 +18,22 @@
                         <th scope="col">#</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Casa</th>
-                        <th scope="col">Opciones</th>
+                        <th scope="col" class="text-right">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row"></th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                    <tr *ngFor="let key of heroes | keys; let idx = index">
+                        <th scope="row"> {{ idx + 1 }} </th>
+                        <td> {{ heroes[key].nombre }} </td>
+                        <td> {{ heroes[key].casa }} </td>
+                        <td class="text-right">
+                            <button [routerLink]="['/heroe',key]" type="button" class="btn btn-outline-dark">
+                                Editar
+                            </button>
+                            <button (click)="borrarHeroe(key)" type="button" class="btn btn-outline-danger">
+                                Eliminar
+                            </button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
