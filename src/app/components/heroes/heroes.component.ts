@@ -11,11 +11,13 @@ import { Router } from '@angular/router';
 export class HeroesComponent {
 
   heroes:any[] = [];
+  loading:boolean = true;
 
   constructor( public _heroes:HeroesService, private router:Router) {
     this._heroes.obtenerHeroes()
                 .subscribe( ( heroes:any[] ) =>{
                   this.heroes = heroes;
+                  this.loading = false;
                 });
    }
 

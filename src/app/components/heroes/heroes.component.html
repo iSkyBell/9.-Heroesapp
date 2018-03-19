@@ -38,6 +38,15 @@
                 </tbody>
             </table>
 
+            <div *ngIf="( heroes | keys ).length == 0 && !loading" class="alert alert-info" role="alert">
+                <strong>No hay heroes en nuestra base de datos ingresados</strong>
+                <p>Si quiere agregar un heroe de clic en el boton Agregar</p>
+            </div>
+
+            <div *ngIf="loading" class="alert alert-warning" role="alert">
+                <strong>Cargando... </strong>Por favor espere un momento.
+            </div>
+
         </div>
     </div>
 </div>
